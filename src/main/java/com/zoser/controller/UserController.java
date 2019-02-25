@@ -1,36 +1,39 @@
 package com.zoser.controller;
 
-import com.zoser.dao.TestDao;
-import com.zoser.pojo.Test;
+import com.zoser.dao.UserDao;
+import com.zoser.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class TestController {
+@RequestMapping("user")
+public class UserController {
 
     @Autowired
-    private TestDao testDao;
+    private UserDao userDao;
 
-    @GetMapping("test")
-    public List<Test> getAll(){
+    @GetMapping("list")
+    public List<User> getAll(){
 
-        return testDao.findAll();
+        return userDao.findAll();
     }
 
     @GetMapping("page")
     public Object getAll(int pageId, int pageSize){
 
-        Sort sort = new Sort(Sort.Direction.DESC, "aaa");
+        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
 
         Pageable pageable = PageRequest.of(pageId,pageSize,sort);
-        Page<Test> ddd= testDao.findAll(pageable);
+        Page<User> ddd= userDao.findAll(pageable);
         return  ddd;
     }
 }
